@@ -1,3 +1,4 @@
+from typing import Any
 from pydantic import BaseModel
 from yaml import load, Loader
 
@@ -38,8 +39,15 @@ class ServerConfig(BaseModel):
     security: ServerSecurityConfig
 
 
+class PluginsConfig(BaseModel):
+    folder: str
+    active: list[str]
+    plugin_settings: dict[str, Any]
+
+
 class Config(BaseModel):
     server: ServerConfig
+    plugins: PluginsConfig
 
     @classmethod
     def from_config(cls, path: str) -> "Config":
