@@ -1,6 +1,5 @@
 from typing import Any, Optional
 from .types import *
-import subprocess, sys
 
 
 class Plugin:
