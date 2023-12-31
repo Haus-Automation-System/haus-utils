@@ -53,6 +53,14 @@ class User(BaseDocument):
         return key == self.password_hash
 
     def has_scope(self, scope: str) -> bool:
+        """Checks if the user has the specified scope or a parent scope.
+
+        Args:
+            scope (str): scope.name
+
+        Returns:
+            bool: True if user has scope or parent scope.
+        """
         if "root" in self.scopes:
             return True
 
@@ -63,6 +71,20 @@ class User(BaseDocument):
             scope = ".".join(scope.split(".")[:-1])
 
         return False
+
+    def within_scope(self, scope: str) -> bool:
+        """Checks if the user has the specified scope or a child scope
+
+        Args:
+            scope (str): scope.name
+
+        Returns:
+            bool: True if user has scope or child scope.
+        """
+        if "root" in self.scopes:
+            return True
+
+        return any([i.startswith(scope) for i in self.scopes])
 
     @property
     def redacted(self) -> RedactedUser:
