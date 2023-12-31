@@ -41,8 +41,6 @@ class ServerConfig(BaseModel):
 
 class PluginsConfig(BaseModel):
     folder: str
-    active: list[str]
-    plugin_settings: dict[str, Any]
 
 
 class Config(BaseModel):
