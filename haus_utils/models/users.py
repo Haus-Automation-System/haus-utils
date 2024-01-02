@@ -68,7 +68,8 @@ class User(BaseDocument):
         while len(check) > 0:
             if check in self.scopes:
                 return True
-            check = ".".join(scope.split(".")[:-1])
+            check = ".".join(check.split(".")[:-1])
+            print(check)
 
         return False
 
