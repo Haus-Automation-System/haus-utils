@@ -1,2 +1,2 @@
 from .plugin import Plugin
-from .types import PluginConfig, PluginMetadata
+from .types import *
