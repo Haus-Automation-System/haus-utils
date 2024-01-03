@@ -170,43 +170,43 @@ class BaseEntityProperty(BaseModel):
 
 
 class StringEntityProperty(BaseEntityProperty):
-    type: Literal["string"]
+    type: Literal["string"] = "string"
     value: Optional[str] = ""
 
 
 class NumberEntityProperty(BaseEntityProperty):
-    type: Literal["number"]
+    type: Literal["number"] = "number"
     value: Optional[Union[int, float]] = 0
 
 
 class BooleanEntityProperty(BaseEntityProperty):
-    type: Literal["boolean"]
+    type: Literal["boolean"] = "boolean"
     value: Optional[bool] = False
 
 
 class ListEntityProperty(BaseEntityProperty):
-    type: Literal["list"]
+    type: Literal["list"] = "list"
     value: Optional[list] = Field(default_factory=list)
 
 
-class TablePropertyColumn(BaseEntityProperty):
+class TablePropertyColumn(BaseModel):
     key: str
-    value_type: Literal["string", "number", "boolean", "list"]
+    value_type: str
 
 
 class TableEntityProperty(BaseEntityProperty):
-    type: Literal["table"]
+    type: Literal["table"] = "table"
     columns: list[TablePropertyColumn]
     value: list[dict[str, Any]]
 
 
 class DateEntityProperty(BaseEntityProperty):
-    type: Literal["date"]
+    type: Literal["date"] = "date"
     value: datetime.datetime
 
 
 class ColorEntityProperty(BaseEntityProperty):
-    type: Literal["color"]
+    type: Literal["color"] = "color"
     hasAlpha: Optional[bool] = False
     value: str
 

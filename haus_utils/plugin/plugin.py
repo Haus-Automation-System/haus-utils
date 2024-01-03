@@ -12,3 +12,12 @@ class Plugin:
 
     async def close(self):
         pass
+
+    async def get_entities(self, ids: list[str] = None) -> list[PluginEntity]:
+        return []
+
+    async def get_actions(self, ids: list[str] = None) -> list[EntityAction]:
+        return []
+
+    async def call_action(self, fields: dict[str, Any]):
+        pass
