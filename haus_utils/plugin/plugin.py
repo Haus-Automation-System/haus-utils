@@ -24,4 +24,4 @@ class Plugin:
         pass
 
     async def listen_events(self) -> AsyncGenerator[Union[PluginEvent, None]]:
-        return None
+        yield None
