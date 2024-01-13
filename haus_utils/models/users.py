@@ -69,7 +69,6 @@ class User(BaseDocument):
             if check in self.scopes:
                 return True
             check = ".".join(check.split(".")[:-1])
-            print(check)
 
         return False
 
