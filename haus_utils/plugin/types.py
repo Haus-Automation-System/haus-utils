@@ -99,27 +99,33 @@ class PluginConfig(BaseModel):
 
 class DisplayData(BaseModel):
     label: str
+    sub_label: Optional[str] = None
     icon: Optional[str] = None
 
 
 class BaseActionField(BaseModel):
     key: str
     display: DisplayData
+    advanced: bool
+    default: Any
+    required: bool
+    example: Optional[Any]
 
 
 class StringActionField(BaseActionField):
-    type: Literal["string"]
+    type: Literal["string"] = "string"
 
 
 class NumberActionField(BaseActionField):
-    type: Literal["number"]
+    type: Literal["number"] = "number"
     decimals: Optional[bool] = True
     min: Optional[Union[int, float]] = None
     max: Optional[Union[int, float]] = None
+    unit: Optional[str] = None
 
 
 class BooleanActionField(BaseActionField):
-    type: Literal["boolean"]
+    type: Literal["boolean"] = "boolean"
 
 
 class SelectionActionOptions(BaseModel):
@@ -129,20 +135,41 @@ class SelectionActionOptions(BaseModel):
 
 
 class SelectionActionField(BaseActionField):
-    type: Literal["selection"]
+    type: Literal["selection"] = "selection"
     options: list[SelectionActionOptions]
     multi: Optional[bool] = False
 
 
 class DateActionField(BaseActionField):
-    type: Literal["date"]
-    min: datetime.datetime
-    max: datetime.datetime
+    type: Literal["date"] = "date"
+    min: Optional[datetime.date]
+    max: Optional[datetime.date]
+
+
+class TimeActionField(BaseActionField):
+    type: Literal["time"] = "time"
+    min: Optional[datetime.time]
+    max: Optional[datetime.time]
+
+
+class DateTimeActionField(BaseActionField):
+    type: Literal["datetime"] = "datetime"
+    min: Optional[datetime.datetime]
+    max: Optional[datetime.datetime]
 
 
 class ColorActionField(BaseActionField):
-    type: Literal["color"]
+    type: Literal["color"] = "color"
     alpha: Optional[bool] = False
+
+
+class EntitySelectorActionField(BaseActionField):
+    type: Literal["entity"] = "entity"
+    prefix: list[str]
+
+
+class JSONActionField(BaseActionField):
+    type: Literal["json"] = "json"
 
 
 ENTITY_ACTION_FIELDS = Union[
@@ -151,7 +178,11 @@ ENTITY_ACTION_FIELDS = Union[
     BooleanActionField,
     SelectionActionField,
     DateActionField,
+    TimeActionField,
+    DateTimeActionField,
     ColorActionField,
+    EntitySelectorActionField,
+    JSONActionField
 ]
 
 
@@ -160,7 +191,7 @@ class EntityAction(BaseModel):
     plugin: str
     display: DisplayData
     target_types: list[str]
-    fields: list[ENTITY_ACTION_FIELDS]
+    fields: Any  # list[ENTITY_ACTION_FIELDS]
 
 
 class BaseEntityProperty(BaseModel):
