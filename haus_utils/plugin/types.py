@@ -53,7 +53,8 @@ class PluginRun(BaseModel):
 class PluginConfig(BaseModel):
     metadata: PluginMetadata
     run: PluginRun
-    settings: dict[str, Union[PluginStringField, PluginNumberField, PluginSwitchField]]
+    settings: dict[str, Union[PluginStringField,
+                              PluginNumberField, PluginSwitchField]]
 
     @classmethod
     def from_manifest(cls, fd: FileIO) -> "PluginConfig":
@@ -228,3 +229,10 @@ class PluginEntity(BaseModel):
     type: str
     display: DisplayData
     properties: dict[str, ENTITY_PROPERTIES]
+
+
+class PluginEvent(BaseModel):
+    id: str
+    plugin: str
+    types: list[str]
+    data: dict[str, ENTITY_PROPERTIES]

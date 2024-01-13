@@ -1,3 +1,4 @@
+from collections.abc import AsyncGenerator
 from typing import Any, Optional
 from .types import *
 
@@ -21,3 +22,6 @@ class Plugin:
 
     async def call_action(self, fields: dict[str, Any]):
         pass
+
+    async def listen_events(self) -> AsyncGenerator[Union[PluginEvent, None]]:
+        return None
