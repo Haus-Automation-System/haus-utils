@@ -190,8 +190,8 @@ class EntityAction(BaseModel):
     id: str
     plugin: str
     display: DisplayData
-    target_types: list[str]
-    fields: Any  # list[ENTITY_ACTION_FIELDS]
+    target_types: Union[list[str], None]
+    fields: dict[str, ENTITY_ACTION_FIELDS]
 
 
 class BaseEntityProperty(BaseModel):
