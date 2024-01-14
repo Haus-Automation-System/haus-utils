@@ -189,6 +189,7 @@ ENTITY_ACTION_FIELDS = Union[
 class EntityAction(BaseModel):
     id: str
     plugin: str
+    category: str
     display: DisplayData
     target_types: Union[list[str], None]
     fields: dict[str, ENTITY_ACTION_FIELDS]
