@@ -20,7 +20,7 @@ class Plugin:
     async def get_actions(self, ids: list[str] = None) -> list[EntityAction]:
         return []
 
-    async def call_action(self, fields: dict[str, Any]):
+    async def call_action(self, action_id: str, target: str, fields: dict[str, Any]):
         pass
 
     async def listen_events(self) -> AsyncGenerator[Union[PluginEvent, None]]:
