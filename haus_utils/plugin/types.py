@@ -267,4 +267,4 @@ class PluginEvent(BaseModel):
     id: str
     plugin: str
     types: list[str]
-    data: dict[str, ENTITY_PROPERTIES]
+    data: Any
