@@ -268,3 +268,5 @@ class PluginEvent(BaseModel):
     plugin: str
     types: list[str]
     data: Any
+    targets: list[str]
+    new_state: Optional[PluginEntity] = None
