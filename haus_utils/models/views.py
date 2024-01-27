@@ -29,13 +29,23 @@ class Macro(BaseModel):
     tooltip: str
 
 
-class BaseViewPanel(BaseModel):
+class ViewParent(BaseModel):
+    type: Literal["view", "panel"]
+    id: str
+
+
+class BaseViewPanel(BaseDocument):
     id: str = Field(default_factory=lambda: token_urlsafe())
+    parent: ViewParent
     type: str
     placement: ViewPanelPlacement
     title: str
     subtitle: Optional[str] = None
     icon: Optional[str] = None
+
+    class Settings:
+        name = "panels"
+        is_root = True
 
 
 class EntityViewPanel(BaseViewPanel):
@@ -47,7 +57,56 @@ class EntityViewPanel(BaseViewPanel):
     macros: list[Macro]
 
 
-class View(BaseDocument):
+class BaseView(BaseDocument):
+    type: str
     name: str
     icon: Optional[str] = None
     scope: Union[ViewServerScope, ViewUserScope]
+
+    class Settings:
+        name = "views"
+        is_root = True
+
+
+class PanelledView(BaseView):
+    type: Literal["panelled"] = "panelled"
+
+
+class MapViewStateFilterAttributes(BaseModel):
+    attribute: str
+    value: Any
+    operation: Literal["eq", "ne", "gt", "lt", "ge", "le"]
+
+
+class MapViewStateFilter(BaseModel):
+    attributes: list[MapViewStateFilterAttributes]
+    union: Literal["all", "any", "one", "none"]
+
+
+class MapViewInteractableState(BaseModel):
+    filters: list[MapViewStateFilter]
+    state: str
+    state_description: str
+    icon: str
+
+
+class EntityIdentifier(BaseModel):
+    plugin: str
+    entity_id: str
+
+
+class MapViewInteractable(BaseModel):
+    id: str = Field(default_factory=lambda: token_urlsafe())
+    position_x: float
+    position_y: float
+    name: str
+    default_icon: str
+    entity: EntityIdentifier
+    states: list[MapViewInteractableState]
+    action: Macro
+
+
+class MapView(BaseView):
+    type: Literal["map"] = "map"
+    image: str
+    interactables: list[MapViewInteractable]
